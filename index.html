@@ -9,20 +9,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    /* --색이름: #색상코드; 형식으로 색상 변수 정의 */
-    --main-bg-color: #f0f2f5;
-    --container-bg-color: #ffffff;
-    --main-text-color: #1c1e21;
-    --secondary-text-color: #333;
-    --select-bg-color: #f5f5f7;
-    --select-text-color: #1d1d1f;
-    --border-color: #e0e0e0;
-  }
-
   html {
     -webkit-text-size-adjust: 100%;
-    background-color: var(--main-bg-color); /* 변수 사용 */
+    /* !important를 사용해 html 배경색을 강제로 지정 */
+    background-color: #f0f2f5 !important;
   }
   body {
     font-family: 'Chiron GoRound TC', sans-serif;
@@ -33,17 +23,19 @@
     margin: 0;
     padding: 15px;
     box-sizing: border-box;
-    background-color: var(--main-bg-color); /* 변수 사용 */
-    color: var(--secondary-text-color); /* 변수 사용 */
+    /* !important를 사용해 body 배경과 글자색을 강제로 지정 */
+    background-color: #f0f2f5 !important; 
+    color: #333 !important;
   }
   .container {
-    background-color: var(--container-bg-color); /* 변수 사용 */
+    /* !important를 사용해 박스 배경색을 강제로 지정 */
+    background-color: #ffffff !important; 
     padding: 30px 35px;
     border-radius: 16px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); 
     width: 100%;
     max-width: 420px;
-    border: 1px solid var(--border-color); /* 변수 사용 */
+    border: 1px solid #e0e0e0; 
     transition: all 0.3s ease;
     text-align: center;
   }
@@ -60,7 +52,8 @@
     margin-bottom: 25px;
     font-size: 24px;
     font-weight: 500;
-    color: var(--main-text-color); /* 변수 사용 */
+    /* !important를 사용해 제목 색상을 강제로 지정 */
+    color: #1c1e21 !important; 
     text-align: center;
   }
   select {
@@ -72,8 +65,9 @@
     font-weight: 500;
     border-radius: 10px;
     border: 1px solid #d2d2d7; 
-    background-color: var(--select-bg-color); /* 변수 사용 */
-    color: var(--select-text-color); /* 변수 사용 */
+    /* !important를 사용해 선택창 배경과 글자색을 강제로 지정 */
+    background-color: #f5f5f7 !important; 
+    color: #1d1d1f !important; 
     appearance: none;
     background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20xmlns%3D%22http://www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5z%22%20fill%3D%22%236e6e73%22/%3E%3C/svg%3E');
     background-repeat: no-repeat;
@@ -86,21 +80,6 @@
       outline: none;
       box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.2);
   }
-
-  /* =================================================================== */
-  /* 브라우저가 다크모드를 강제할 때, 다시 흰색으로 덮어쓰는 코드 */
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --main-bg-color: #f0f2f5;
-      --container-bg-color: #ffffff;
-      --main-text-color: #1c1e21;
-      --secondary-text-color: #333;
-      --select-bg-color: #f5f5f7;
-      --select-text-color: #1d1d1f;
-      --border-color: #e0e0e0;
-    }
-  }
-  /* =================================================================== */
 
   @media (max-width: 600px) {
     .container {
