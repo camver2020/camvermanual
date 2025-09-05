@@ -76,22 +76,6 @@
   }
   .result-item:hover { background: #eaf4ff; }
 
-  /* 자동완성 */
-  .autocomplete {
-    position: relative;
-    width: 85%;
-    margin: 0 auto;
-    text-align: left;
-  }
-  .autocomplete-item {
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-top: none;
-    background: #fff;
-    cursor: pointer;
-  }
-  .autocomplete-item:hover { background: #f0f0f0; }
-
   /* 미리보기 카드 */
   .preview-card {
     margin-top: 20px;
@@ -114,23 +98,6 @@
     font-weight: bold;
     color: #000;
     text-decoration: none;
-  }
-  .call-btn {
-    display: block;
-    margin-top: 10px;
-    padding: 12px;
-    background: #28a745;
-    border-radius: 8px;
-    font-weight: bold;
-    color: #fff;
-    text-decoration: none;
-  }
-
-  /* 안내문구 */
-  .call-info {
-    margin-top: 15px;
-    font-size: 14px;
-    color: #555;
   }
 
   /* 검색 하이라이트 */
@@ -156,7 +123,6 @@
 
     <!-- 검색창 -->
     <input type="text" id="searchBox" placeholder="영상 검색...">
-    <div class="autocomplete" id="autocomplete"></div>
 
     <!-- 검색 결과 -->
     <div class="results" id="results"></div>
@@ -169,9 +135,7 @@
       👉 카카오톡 문의하기
     </a>
 
-    <!-- 전화 버튼 + 안내 -->
-    <p class="call-info">연결 후 내선번호 2번을 눌러주세요</p>
-    <a href="tel:025766776" class="call-btn">📞 전화 문의하기</a>
+
   </div>
 
 <script>
@@ -215,7 +179,6 @@ const excelData = [
   const level3 = document.getElementById("level3-select");
   const searchBox = document.getElementById("searchBox");
   const resultsDiv = document.getElementById("results");
-  const autocompleteDiv = document.getElementById("autocomplete");
   const preview = document.getElementById("preview");
 
   // 1단계 회사 목록
@@ -270,11 +233,10 @@ const excelData = [
     }
   });
 
-  // 검색 (전체 대상)
+  // 검색 (전체 대상, 자동완성 제거)
   searchBox.addEventListener("input", function() {
     const query = this.value.toLowerCase();
     resultsDiv.innerHTML = "";
-    autocompleteDiv.innerHTML = "";
     preview.style.display = "none";
     if (!query) return;
 
@@ -286,7 +248,6 @@ const excelData = [
         match => `<mark>${match}</mark>`
       );
 
-      // 검색 결과 (회사명 표시)
       const a = document.createElement("a");
       a.innerHTML = `[${item.step1}] ${highlighted}`;
       a.href = item.url;
@@ -294,19 +255,6 @@ const excelData = [
       a.className = "result-item";
       a.onclick = () => showPreview(item);
       resultsDiv.appendChild(a);
-
-      // 자동완성 (영상명만)
-      const ac = document.createElement("div");
-      ac.className = "autocomplete-item";
-      ac.textContent = item.step3;
-      ac.onclick = () => {
-        searchBox.value = item.step3;
-        resultsDiv.innerHTML = "";
-        showPreview(item);
-        window.open(item.url, "_blank");
-        autocompleteDiv.innerHTML = "";
-      };
-      autocompleteDiv.appendChild(ac);
     });
   });
 
