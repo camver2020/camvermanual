@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- 라이트 모드 강제 -->
 <meta name="color-scheme" content="light">
 <title>캠버 영상 설명서</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,7 +12,6 @@
 <style>
   html {
     -webkit-text-size-adjust: 100%;
-    /* !important를 사용해 html 배경색을 강제로 지정 */
     background-color: #f0f2f5 !important;
   }
   body {
@@ -23,38 +23,30 @@
     margin: 0;
     padding: 15px;
     box-sizing: border-box;
-    /* !important를 사용해 body 배경과 글자색을 강제로 지정 */
-    background-color: #f0f2f5 !important; 
+    background-color: #f0f2f5 !important;
     color: #333 !important;
   }
   .container {
-    /* !important를 사용해 박스 배경색을 강제로 지정 */
-    background-color: #ffffff !important; 
+    background-color: #ffffff !important;
     padding: 30px 35px;
     border-radius: 16px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 420px;
-    border: 1px solid #e0e0e0; 
-    transition: all 0.3s ease;
+    border: 1px solid #e0e0e0;
     text-align: center;
   }
   .logo {
     max-width: 180px;
     height: auto;
-    margin-bottom: 25px;
+    margin: 0 auto 25px;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
   }
   h2 {
-    margin-top: 0;
-    margin-bottom: 25px;
+    margin: 0 0 25px;
     font-size: 24px;
     font-weight: 500;
-    /* !important를 사용해 제목 색상을 강제로 지정 */
-    color: #1c1e21 !important; 
-    text-align: center;
+    color: #1c1e21 !important;
   }
   select {
     width: 100%;
@@ -64,89 +56,104 @@
     font-family: 'Chiron GoRound TC', sans-serif;
     font-weight: 500;
     border-radius: 10px;
-    border: 1px solid #d2d2d7; 
-    /* !important를 사용해 선택창 배경과 글자색을 강제로 지정 */
-    background-color: #f5f5f7 !important; 
-    color: #1d1d1f !important; 
+    border: 1px solid #d2d2d7;
+    background-color: #f5f5f7 !important;
+    color: #1d1d1f !important;
     appearance: none;
     background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20xmlns%3D%22http://www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5z%22%20fill%3D%22%236e6e73%22/%3E%3C/svg%3E');
     background-repeat: no-repeat;
     background-position: right 15px center;
     cursor: pointer;
-    transition: border-color 0.2s, box-shadow 0.2s;
   }
   select:focus {
-      border-color: #0071e3; 
-      outline: none;
-      box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.2);
+    border-color: #0071e3;
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.2);
   }
-
   @media (max-width: 600px) {
-    .container {
-        padding: 25px 20px;
-    }
-    .logo {
-        max-width: 160px;
-        margin-bottom: 25px;
-    }
-    h2 {
-      font-size: 28px;
-      margin-bottom: 30px;
-    }
-    select {
-      padding: 22px 20px;
-      font-size: 20px;
-      margin-top: 20px;
-      border-radius: 12px;
-    }
+    .container { padding: 25px 20px; }
+    .logo { max-width: 160px; margin-bottom: 25px; }
+    h2 { font-size: 28px; margin-bottom: 30px; }
+    select { padding: 22px 20px; font-size: 20px; margin-top: 20px; border-radius: 12px; }
   }
-/* 브라우저 강제 다크모드 대응 최종병기 */
-@media (prefers-color-scheme: dark) {
-  .container, .logo {
-    filter: invert(1) hue-rotate(180deg);
-  }
-}
 </style>
 </head>
 <body>
+  <div class="container">
+    <img src="https://i.imgur.com/ionpdF9.png" alt="캠버 로고" class="logo">
+    <h2>캠버 영상 설명서</h2>
 
-<div class="container">
-  <img src="https://i.imgur.com/ionpdF9.png" alt="캠버 로고" class="logo">
-  <h2>캠버 영상 설명서</h2>
-  <div id="step1">
-    <select id="level1-select">
-      <option value="" selected disabled>-- 1단계: 회사 선택 --</option>
-      <option value="hyundai-motor">현대자동차</option>
-      <option value="hyundai-eng">현대엔지니어링</option>
-    </select>
+    <!-- 1단계: 회사 선택 -->
+    <div id="step1">
+      <select id="level1-select">
+        <option value="" selected disabled>-- 1단계: 회사 선택 --</option>
+      </select>
+    </div>
+
+    <!-- 2단계: 기능 선택 -->
+    <div id="step2" style="display: none;">
+      <select id="level2-select">
+        <option value="" selected disabled>-- 2단계: 기능 선택 --</option>
+      </select>
+    </div>
+
+    <!-- 3단계: 영상 선택 -->
+    <div id="step3" style="display: none;">
+      <select id="level3-select">
+        <option value="" selected disabled>-- 3단계: 영상 선택 --</option>
+      </select>
+    </div>
   </div>
-  <div id="step2" style="display: none;">
-    <select id="level2-select">
-      <option value="" selected disabled>-- 2단계: 영상 선택 --</option>
-    </select>
-  </div>
-</div>
 
 <script>
-  // 이 아래 스크립트 부분은 이전과 동일합니다.
+  // 예시 데이터 (엑셀에서 뽑아 변환된 형태)
   const optionsData = {
-  "hyundai-motor": [{"text": "2열 실내 테이블", "url": "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=112"}, {"text": "냉장고", "url": "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=113&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24="}, {"text": "무시동 에어컨", "url": "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=114&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24="}, {"text": "무시동 히터", "url": "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=115&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24="}, {"text": "화면 미러링", "url": "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=116&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24="}, {"text": "싱크대", "url": "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=117&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24="}, {"text": "어닝텐트 설치", "url": "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=118&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24="}, {"text": "어닝텐트 철수", "url": "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=119&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24="}, {"text": "청수 보충", "url": "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=120&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24="}, {"text": "오수 배출", "url": "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=121&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24="}, {"text": "외부 전원 충전기 충전", "url": "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=122&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24="}, {"text": "외부샤워기", "url": "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=124&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24="}, {"text": "조명", "url": "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=123&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24="}, {"text": "좌석 평탄화", "url": "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=125&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24="}, {"text": "트렁크 테이블", "url": "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=126&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24="}, {"text": "팝업 컨트롤러", "url": "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=127&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24="}, {"text": "팝업텐트 설치", "url": "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=128&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24="}, {"text": "팝업텐트 철수", "url": "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=129&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24="}],
-  "hyundai-eng": [{"text": "전체 사용법 영상", "url": "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=130&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24mYl9jYXRlZ29yeT3tmITrjIDsl5Tsp4Dri4jslrTrp4E="}, {"text": "팝업텐트 열기", "url": "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=131&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24mYl9jYXRlZ29yeT3tmITrjIDsl5Tsp4Dri4jslrTrp4E="}, {"text": "팝업텐트 닫기", "url": "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=132&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24mYl9jYXRlZ29yeT3tmITrjIDsl5Tsp4Dri4jslrTrp4E="}, {"text": "실내 좌석 평탄화", "url": "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=133&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24mYl9jYXRlZ29yeT3tmITrjIDsl5Tsp4Dri4jslrTrp4E="}, {"text": "어닝텐트 사용법", "url": "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=134&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24mYl9jYXRlZ29yeT3tmITrjIDsl5Tsp4Dri4jslrTrp4E="}, {"text": "전자제품 사용법", "url": "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=135&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24mYl9jYXRlZ29yeT3tmITrjIDsl5Tsp4Dri4jslrTrp4E="}, {"text": "싱크대 사용법", "url": "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=136&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24mYl9jYXRlZ29yeT3tmITrjIDsl5Tsp4Dri4jslrTrp4E="}, {"text": "TV 사용법", "url": "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=137&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24mYl9jYXRlZ29yeT3tmITrjIDsl5Tsp4Dri4jslrTrp4E="}, {"text": "무시동 히터 사용법", "url": "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=138&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24mYl9jYXRlZ29yeT3tmITrjIDsl5Tsp4Dri4jslrTrp4E="}, {"text": "무시동 에어컨 사용법", "url": "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=139&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24mYl9jYXRlZ29yeT3tmITrjIDsl5Tsp4Dri4jslrTrp4E="}]
-};
+    "현대 엔지니어링": {
+      "주요기능": [
+        { text: "TV 사용법", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=137" },
+        { text: "무시동 에어컨 사용법", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=139" },
+        { text: "무시동 히터 사용법", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=138" },
+        { text: "실내 좌석 평탄화", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=133" },
+        { text: "싱크대 사용법", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=136" },
+        { text: "어닝텐트 사용법", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=134" }
+      ],
+      "부가기능": [
+        { text: "전자제품 사용법", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=135" },
+        { text: "전체 사용법 영상", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=130" },
+        { text: "팝업텐트 닫기", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=132" },
+        { text: "팝업텐트 열기", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=131" }
+      ]
+    }
+    // 필요 시 다른 회사 추가
+  };
 
   const level1Select = document.getElementById('level1-select');
-  const step2Div = document.getElementById('step2');
   const level2Select = document.getElementById('level2-select');
+  const level3Select = document.getElementById('level3-select');
+  const step2Div = document.getElementById('step2');
+  const step3Div = document.getElementById('step3');
 
+  // 1단계 회사 목록 채우기
+  Object.keys(optionsData).forEach(company => {
+    const opt = document.createElement('option');
+    opt.value = company;
+    opt.textContent = company;
+    level1Select.appendChild(opt);
+  });
+
+  // 회사 선택 → 기능 목록 로드
   level1Select.addEventListener('change', function() {
-    const selectedCompany = this.value;
-    level2Select.innerHTML = '<option value="" selected disabled>-- 2단계: 영상 선택 --</option>';
-    if (selectedCompany && optionsData[selectedCompany]) {
-      optionsData[selectedCompany].forEach(option => {
-        const newOption = document.createElement('option');
-        newOption.textContent = option.text;
-        newOption.setAttribute('data-url', option.url);
-        level2Select.appendChild(newOption);
+    const company = this.value;
+    level2Select.innerHTML = '<option value="" selected disabled>-- 2단계: 기능 선택 --</option>';
+    level3Select.innerHTML = '<option value="" selected disabled>-- 3단계: 영상 선택 --</option>';
+    step3Div.style.display = 'none';
+
+    if (company && optionsData[company]) {
+      Object.keys(optionsData[company]).forEach(funcGroup => {
+        const opt = document.createElement('option');
+        opt.value = funcGroup;
+        opt.textContent = funcGroup;
+        level2Select.appendChild(opt);
       });
       step2Div.style.display = 'block';
     } else {
@@ -154,7 +161,27 @@
     }
   });
 
+  // 기능 선택 → 영상 목록 로드
   level2Select.addEventListener('change', function() {
+    const company = level1Select.value;
+    const funcGroup = this.value;
+    level3Select.innerHTML = '<option value="" selected disabled>-- 3단계: 영상 선택 --</option>';
+
+    if (company && funcGroup && optionsData[company][funcGroup]) {
+      optionsData[company][funcGroup].forEach(item => {
+        const opt = document.createElement('option');
+        opt.textContent = item.text;
+        opt.setAttribute('data-url', item.url);
+        level3Select.appendChild(opt);
+      });
+      step3Div.style.display = 'block';
+    } else {
+      step3Div.style.display = 'none';
+    }
+  });
+
+  // 영상 선택 → 새창 열기
+  level3Select.addEventListener('change', function() {
     const selectedOption = this.options[this.selectedIndex];
     const url = selectedOption.getAttribute('data-url');
     if (url) {
@@ -163,8 +190,5 @@
     }
   });
 </script>
-
 </body>
 </html>
-
-
