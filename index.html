@@ -4,9 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>캠버 영상 설명서</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@500&display=swap" rel="stylesheet">
+
 <style>
   body {
-    font-family: Arial, sans-serif;
+    font-family: 'Chiron GoRound TC', sans-serif;
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -32,22 +38,31 @@
     display: block;
   }
   h2 { margin-bottom: 20px; }
+
+  /* 드롭다운 & 검색창 */
   select, input {
     width: 90%;
     padding: 14px;
     font-size: 16px;
     border-radius: 10px;
     border: 1px solid #ccc;
-    margin-bottom: 15px;
+    margin: 0 auto 15px;
+    display: block;
+    box-sizing: border-box;
   }
-  #searchBox {
-    width: 85%;
+  #searchBox { width: 85%; }
+
+  /* 드롭다운 숨김은 visibility로 처리 */
+  .hidden {
+    visibility: hidden;
+    height: 0;
+    margin: 0;
+    padding: 0;
   }
-  .results, .autocomplete {
-    text-align: left;
-    margin-top: 10px;
-  }
-  .result-item, .autocomplete-item {
+
+  /* 검색 결과 */
+  .results { text-align: left; margin-top: 10px; }
+  .result-item {
     display: block;
     padding: 10px 14px;
     margin-bottom: 8px;
@@ -59,9 +74,25 @@
     color: #0071e3;
     font-weight: 500;
   }
-  .result-item:hover, .autocomplete-item:hover {
-    background: #eaf4ff;
+  .result-item:hover { background: #eaf4ff; }
+
+  /* 자동완성 */
+  .autocomplete {
+    position: relative;
+    width: 85%;
+    margin: 0 auto;
+    text-align: left;
   }
+  .autocomplete-item {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+    background: #fff;
+    cursor: pointer;
+  }
+  .autocomplete-item:hover { background: #f0f0f0; }
+
+  /* 미리보기 카드 */
   .preview-card {
     margin-top: 20px;
     padding: 15px;
@@ -72,6 +103,8 @@
   }
   .preview-card h3 { margin: 0 0 10px; font-size: 18px; }
   .preview-card a { color: #0071e3; font-weight: 500; }
+
+  /* 버튼 */
   .contact-btn {
     display: block;
     margin-top: 20px;
@@ -82,10 +115,26 @@
     color: #000;
     text-decoration: none;
   }
-  mark {
-    background: yellow;
-    color: black;
+  .call-btn {
+    display: block;
+    margin-top: 10px;
+    padding: 12px;
+    background: #28a745;
+    border-radius: 8px;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
   }
+
+  /* 안내문구 */
+  .call-info {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #555;
+  }
+
+  /* 검색 하이라이트 */
+  mark { background: yellow; color: black; }
 </style>
 </head>
 <body>
@@ -97,11 +146,11 @@
       <option value="" selected disabled>🏢 1단계: 회사 선택</option>
     </select>
 
-    <select id="level2-select" style="display:none;">
+    <select id="level2-select" class="hidden">
       <option value="" selected disabled>⚙️ 2단계: 기능 선택</option>
     </select>
 
-    <select id="level3-select" style="display:none;">
+    <select id="level3-select" class="hidden">
       <option value="" selected disabled>🎬 3단계: 영상 선택</option>
     </select>
 
@@ -115,10 +164,14 @@
     <!-- 미리보기 -->
     <div class="preview-card" id="preview" style="display:none;"></div>
 
-    <!-- 문의 버튼 (카카오톡 링크 넣으면 됨) -->
+    <!-- 문의 버튼 -->
     <a href="http://pf.kakao.com/_njISxb/chat" target="_blank" class="contact-btn">
       👉 카카오톡 문의하기
     </a>
+
+    <!-- 전화 버튼 + 안내 -->
+    <p class="call-info">연결 후 내선번호 2번을 눌러주세요</p>
+    <a href="tel:025766776" class="call-btn">📞 전화 문의하기</a>
   </div>
 
 <script>
@@ -165,7 +218,7 @@ const excelData = [
   const autocompleteDiv = document.getElementById("autocomplete");
   const preview = document.getElementById("preview");
 
-  // 회사 목록
+  // 1단계 회사 목록
   [...new Set(excelData.map(i => i.step1))].forEach(val => {
     const opt = document.createElement("option");
     opt.value = val;
@@ -173,11 +226,12 @@ const excelData = [
     level1.appendChild(opt);
   });
 
-  // 회사 선택
+  // 회사 선택 → 기능 목록
   level1.addEventListener("change", function() {
     const company = this.value;
     level2.innerHTML = '<option value="" selected disabled>⚙️ 2단계: 기능 선택</option>';
     level3.innerHTML = '<option value="" selected disabled>🎬 3단계: 영상 선택</option>';
+
     const step2Values = [...new Set(excelData.filter(i => i.step1 === company).map(i => i.step2))];
     step2Values.forEach(val => {
       const opt = document.createElement("option");
@@ -185,14 +239,16 @@ const excelData = [
       opt.textContent = val;
       level2.appendChild(opt);
     });
-    level2.style.display = "block";
+
+    level2.classList.remove("hidden");
   });
 
-  // 기능 선택
+  // 기능 선택 → 영상 목록
   level2.addEventListener("change", function() {
     const company = level1.value;
     const func = this.value;
     level3.innerHTML = '<option value="" selected disabled>🎬 3단계: 영상 선택</option>';
+
     const step3Items = excelData.filter(i => i.step1 === company && i.step2 === func);
     step3Items.forEach(item => {
       const opt = document.createElement("option");
@@ -200,7 +256,8 @@ const excelData = [
       opt.textContent = item.step3;
       level3.appendChild(opt);
     });
-    level3.style.display = "block";
+
+    level3.classList.remove("hidden");
   });
 
   // 영상 선택
@@ -213,23 +270,23 @@ const excelData = [
     }
   });
 
-  // 검색 기능 (전체 대상)
+  // 검색 (전체 대상)
   searchBox.addEventListener("input", function() {
     const query = this.value.toLowerCase();
     resultsDiv.innerHTML = "";
     autocompleteDiv.innerHTML = "";
     preview.style.display = "none";
-
     if (!query) return;
 
     const filtered = excelData.filter(i => i.step3.toLowerCase().includes(query));
+
     filtered.forEach(item => {
-      // 하이라이트 처리
       const highlighted = item.step3.replace(
         new RegExp(query, "gi"),
         match => `<mark>${match}</mark>`
       );
-      // 결과 리스트
+
+      // 검색 결과 (회사명 표시)
       const a = document.createElement("a");
       a.innerHTML = `[${item.step1}] ${highlighted}`;
       a.href = item.url;
@@ -238,7 +295,7 @@ const excelData = [
       a.onclick = () => showPreview(item);
       resultsDiv.appendChild(a);
 
-      // 자동완성
+      // 자동완성 (영상명만)
       const ac = document.createElement("div");
       ac.className = "autocomplete-item";
       ac.textContent = item.step3;
