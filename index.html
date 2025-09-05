@@ -19,17 +19,17 @@
     min-height: 100vh;
     margin: 0;
     padding: 20px;
-    background: #f0f2f5;
-    color: #333;
+    background: #2c2c2c;   /* 공통 배경 */
+    color: #f0f0f0;        /* 공통 텍스트 */
   }
   .container {
-    background: #fff;
+    background: #3a3a3a;   /* 컨테이너 공통색 */
     padding: 30px;
     border-radius: 16px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
     width: 100%;
     max-width: 500px;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #555;
     text-align: center;
   }
   .logo {
@@ -37,7 +37,7 @@
     margin: 0 auto 20px;
     display: block;
   }
-  h2 { margin-bottom: 20px; }
+  h2 { margin-bottom: 20px; color: #f0f0f0; }
 
   /* 드롭다운 & 검색창 */
   select, input {
@@ -45,14 +45,16 @@
     padding: 14px;
     font-size: 16px;
     border-radius: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #777;
     margin: 0 auto 15px;
     display: block;
     box-sizing: border-box;
+    background: #2c2c2c;
+    color: #f0f0f0;
   }
   #searchBox { width: 85%; }
 
-  /* 드롭다운 숨김은 visibility로 처리 */
+  /* 드롭다운 숨김 */
   .hidden {
     visibility: hidden;
     height: 0;
@@ -66,29 +68,30 @@
     display: block;
     padding: 10px 14px;
     margin-bottom: 8px;
-    border: 1px solid #d2d2d7;
+    border: 1px solid #555;
     border-radius: 8px;
-    background: #fafafa;
+    background: #2c2c2c;
     cursor: pointer;
     text-decoration: none;
-    color: #0071e3;
+    color: #0071e3; /* 포인트 블루 */
     font-weight: 500;
   }
-  .result-item:hover { background: #eaf4ff; }
+  .result-item:hover { background: #444; }
 
   /* 미리보기 카드 */
   .preview-card {
     margin-top: 20px;
     padding: 15px;
-    border: 1px solid #ddd;
+    border: 1px solid #555;
     border-radius: 12px;
-    background: #fafafa;
+    background: #2c2c2c;
     text-align: left;
+    color: #f0f0f0;
   }
   .preview-card h3 { margin: 0 0 10px; font-size: 18px; }
   .preview-card a { color: #0071e3; font-weight: 500; }
 
-  /* 버튼 */
+  /* 카카오톡 문의 버튼 */
   .contact-btn {
     display: block;
     margin-top: 20px;
@@ -130,12 +133,10 @@
     <!-- 미리보기 -->
     <div class="preview-card" id="preview" style="display:none;"></div>
 
-    <!-- 문의 버튼 -->
-    <a href="http://pf.kakao.com/_njISxb/chat" target="_blank" class="contact-btn">
+    <!-- 카카오톡 문의 버튼 -->
+    <a href="https://i.imgur.com/ionpdF9.png" target="_blank" class="contact-btn">
       👉 카카오톡 문의하기
     </a>
-
-
   </div>
 
 <script>
@@ -233,7 +234,7 @@ const excelData = [
     }
   });
 
-  // 검색 (전체 대상, 자동완성 제거)
+  // 검색 (전체 대상)
   searchBox.addEventListener("input", function() {
     const query = this.value.toLowerCase();
     resultsDiv.innerHTML = "";
