@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="light">
 <title>캠버 영상 설명서</title>
 <style>
   body {
@@ -14,19 +13,18 @@
     min-height: 100vh;
     margin: 0;
     padding: 20px;
-    background-color: #f0f2f5 !important;
-    color: #333 !important;
+    background: #f0f2f5;
+    color: #333;
   }
   .container {
-    background-color: #ffffff !important;
+    background: #fff;
     padding: 30px;
     border-radius: 16px;
     box-shadow: 0 8px 30px rgba(0,0,0,0.1);
     width: 100%;
-    max-width: 480px;
+    max-width: 500px;
     border: 1px solid #e0e0e0;
     text-align: center;
-    transition: all 0.3s ease;
   }
   .logo {
     max-width: 180px;
@@ -35,32 +33,21 @@
   }
   h2 { margin-bottom: 20px; }
   select, input {
-    width: 100%;
-    padding: 14px 18px;
+    width: 90%;
+    padding: 14px;
     font-size: 16px;
     border-radius: 10px;
-    border: 1px solid #d2d2d7;
-    background-color: #f5f5f7 !important;
-    color: #1d1d1f !important;
+    border: 1px solid #ccc;
     margin-bottom: 15px;
-    transition: border-color 0.2s, box-shadow 0.2s;
   }
-  select:hover, input:focus {
-    border-color: #0071e3;
-    box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.2);
-    outline: none;
-  }
-  /* 검색창 크기 줄이기 */
   #searchBox {
-    width: 90%;
-    margin: 0 auto 15px;
-    display: block;
+    width: 85%;
   }
-  .results {
-    margin-top: 10px;
+  .results, .autocomplete {
     text-align: left;
+    margin-top: 10px;
   }
-  .result-item {
+  .result-item, .autocomplete-item {
     display: block;
     padding: 10px 14px;
     margin-bottom: 8px;
@@ -71,29 +58,33 @@
     text-decoration: none;
     color: #0071e3;
     font-weight: 500;
-    transition: all 0.2s;
   }
-  .result-item:hover {
+  .result-item:hover, .autocomplete-item:hover {
     background: #eaf4ff;
-    border-color: #0071e3;
   }
   .preview-card {
     margin-top: 20px;
     padding: 15px;
-    border: 1px solid #d2d2d7;
+    border: 1px solid #ddd;
     border-radius: 12px;
     background: #fafafa;
     text-align: left;
   }
-  .preview-card h3 {
-    margin: 0 0 10px;
-    font-size: 18px;
-    color: #1c1e21;
-  }
-  .preview-card a {
-    color: #0071e3;
+  .preview-card h3 { margin: 0 0 10px; font-size: 18px; }
+  .preview-card a { color: #0071e3; font-weight: 500; }
+  .contact-btn {
+    display: block;
+    margin-top: 20px;
+    padding: 12px;
+    background: #ffeb00;
+    border-radius: 8px;
+    font-weight: bold;
+    color: #000;
     text-decoration: none;
-    font-weight: 500;
+  }
+  mark {
+    background: yellow;
+    color: black;
   }
 </style>
 </head>
@@ -102,29 +93,32 @@
     <img src="https://i.imgur.com/ionpdF9.png" alt="캠버 로고" class="logo">
     <h2>캠버 영상 설명서</h2>
 
-    <!-- 1단계: 회사 선택 -->
     <select id="level1-select">
       <option value="" selected disabled>🏢 1단계: 회사 선택</option>
     </select>
 
-    <!-- 2단계: 기능 선택 -->
     <select id="level2-select" style="display:none;">
       <option value="" selected disabled>⚙️ 2단계: 기능 선택</option>
     </select>
 
-    <!-- 3단계: 영상 선택 -->
     <select id="level3-select" style="display:none;">
       <option value="" selected disabled>🎬 3단계: 영상 선택</option>
     </select>
 
-    <!-- 검색창 (항상 표시) -->
+    <!-- 검색창 -->
     <input type="text" id="searchBox" placeholder="영상 검색...">
+    <div class="autocomplete" id="autocomplete"></div>
 
     <!-- 검색 결과 -->
     <div class="results" id="results"></div>
 
-    <!-- 미리보기 카드 -->
+    <!-- 미리보기 -->
     <div class="preview-card" id="preview" style="display:none;"></div>
+
+    <!-- 문의 버튼 (카카오톡 링크 넣으면 됨) -->
+    <a href="http://pf.kakao.com/_njISxb/chat" target="_blank" class="contact-btn">
+      👉 카카오톡 문의하기
+    </a>
   </div>
 
 <script>
@@ -168,26 +162,23 @@ const excelData = [
   const level3 = document.getElementById("level3-select");
   const searchBox = document.getElementById("searchBox");
   const resultsDiv = document.getElementById("results");
+  const autocompleteDiv = document.getElementById("autocomplete");
   const preview = document.getElementById("preview");
 
-  // 1단계 회사 목록
-  const step1Values = [...new Set(excelData.map(item => item.step1))];
-  step1Values.forEach(val => {
+  // 회사 목록
+  [...new Set(excelData.map(i => i.step1))].forEach(val => {
     const opt = document.createElement("option");
     opt.value = val;
     opt.textContent = val;
     level1.appendChild(opt);
   });
 
-  // 회사 선택 → 기능 목록
+  // 회사 선택
   level1.addEventListener("change", function() {
     const company = this.value;
     level2.innerHTML = '<option value="" selected disabled>⚙️ 2단계: 기능 선택</option>';
     level3.innerHTML = '<option value="" selected disabled>🎬 3단계: 영상 선택</option>';
-    resultsDiv.innerHTML = "";
-    preview.style.display = "none";
-
-    const step2Values = [...new Set(excelData.filter(item => item.step1 === company).map(item => item.step2))];
+    const step2Values = [...new Set(excelData.filter(i => i.step1 === company).map(i => i.step2))];
     step2Values.forEach(val => {
       const opt = document.createElement("option");
       opt.value = val;
@@ -197,15 +188,12 @@ const excelData = [
     level2.style.display = "block";
   });
 
-  // 기능 선택 → 영상 목록
+  // 기능 선택
   level2.addEventListener("change", function() {
     const company = level1.value;
     const func = this.value;
     level3.innerHTML = '<option value="" selected disabled>🎬 3단계: 영상 선택</option>';
-    resultsDiv.innerHTML = "";
-    preview.style.display = "none";
-
-    const step3Items = excelData.filter(item => item.step1 === company && item.step2 === func);
+    const step3Items = excelData.filter(i => i.step1 === company && i.step2 === func);
     step3Items.forEach(item => {
       const opt = document.createElement("option");
       opt.value = item.url;
@@ -215,39 +203,57 @@ const excelData = [
     level3.style.display = "block";
   });
 
-  // 영상 선택 → 새창 열기 + 미리보기
+  // 영상 선택
   level3.addEventListener("change", function() {
     const url = this.value;
     const text = this.options[this.selectedIndex].textContent;
     if (url) {
       window.open(url, "_blank");
-      showPreview({ step3: text, url: url });
-      this.value = "";
+      showPreview({ step3: text, step1: level1.value, url: url });
     }
   });
 
-  // 🔍 전체 excelData 대상 검색
+  // 검색 기능 (전체 대상)
   searchBox.addEventListener("input", function() {
     const query = this.value.toLowerCase();
     resultsDiv.innerHTML = "";
+    autocompleteDiv.innerHTML = "";
     preview.style.display = "none";
 
     if (!query) return;
 
     const filtered = excelData.filter(i => i.step3.toLowerCase().includes(query));
     filtered.forEach(item => {
+      // 하이라이트 처리
+      const highlighted = item.step3.replace(
+        new RegExp(query, "gi"),
+        match => `<mark>${match}</mark>`
+      );
+      // 결과 리스트
       const a = document.createElement("a");
-      a.textContent = `[${item.step1}] ${item.step3}`;
+      a.innerHTML = `[${item.step1}] ${highlighted}`;
       a.href = item.url;
       a.target = "_blank";
       a.className = "result-item";
       a.onclick = () => showPreview(item);
       resultsDiv.appendChild(a);
+
+      // 자동완성
+      const ac = document.createElement("div");
+      ac.className = "autocomplete-item";
+      ac.textContent = item.step3;
+      ac.onclick = () => {
+        searchBox.value = item.step3;
+        resultsDiv.innerHTML = "";
+        showPreview(item);
+        window.open(item.url, "_blank");
+        autocompleteDiv.innerHTML = "";
+      };
+      autocompleteDiv.appendChild(ac);
     });
-    if (!filtered.length) resultsDiv.innerHTML = "<p>검색 결과 없음</p>";
   });
 
-  // 미리보기 카드 표시
+  // 미리보기 카드
   function showPreview(item) {
     preview.innerHTML = `
       <h3>🎬 ${item.step3}</h3>
