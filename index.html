@@ -36,7 +36,11 @@
     margin: 0 auto 20px;
     display: block;
   }
-  h2 { margin-bottom: 20px; color: #f0f0f0; }
+  h2 { 
+    margin-bottom: 20px; 
+    color: #f0f0f0; 
+    font-size: 2em; /* 폰트 크기 2배로 설정 */
+  }
 
   /* 드롭다운 & 검색창 */
   .text-description {
@@ -44,7 +48,7 @@
     margin-bottom: 5px;
     text-align: left;
     color: #bbb;
-    padding-left: 10px; /* 텍스트를 오른쪽으로 이동 */
+    padding-left: 5%; /* 텍스트를 드롭다운과 같은 위치로 정렬 */
   }
   select, input {
     width: 90%;
@@ -67,12 +71,21 @@
     margin-bottom: 5px;
     color: #bbb;
     font-size: 15px;
-    padding-left: 10px; /* 오른쪽으로 이동 */
+    padding-left: 5%; /* 검색창과 같은 위치로 정렬 */
   }
 
   /* 드롭다운 숨김 */
   .hidden {
     display: none;
+  }
+
+  /* 구분선 */
+  hr.divider {
+    border: 0;
+    height: 1px;
+    background: #555;
+    margin: 25px 0;
+    width: 90%;
   }
 
   /* 검색 결과 */
@@ -130,19 +143,21 @@
       <option value="" selected disabled>🏢 회사를 선택해주세요</option>
     </select>
 
-    <div id="step2-text" class="text-description hidden">⚙️ 2단계: 기능 선택<</div>
+    <div id="step2-text" class="text-description hidden">⚙️ 2. 기능 선택</div>
     <select id="level2-select" class="hidden">
       <option value="" selected disabled>⚙️ 기능을 선택해 주세요</option>
-    <div id="step2-text" class="text-description hidden">주요기능 : 무시동 에어컨, 히터, 어닝, 평탄화, 팝업텐트<br>부가기능 : 그외 기능들<</div>
     </select>
+    <div id="step2-info-text" class="text-description hidden">주요기능 : 무시동 에어컨, 히터, 어닝, 평탄화, 팝업텐트<br>부가기능 : 그외 기능들</div>
 
-    <div id="step3-text" class="text-description hidden">🎬 3단계: 영상 선택</div>
+    <div id="step3-text" class="text-description hidden">🎬 3. 영상 선택</div>
     <select id="level3-select" class="hidden">
       <option value="" selected disabled>🎬 영상을 선택해 주세요</option>
     </select>
 
-    <div id="search-text">필요하신 기능 한번에 검색할수 있습니다.<br>검색뒤 이용하시는 회사 차량에 맞춰서 설명서 눌러주시면 설명동영상이 새창으로 열립니다.</div>
-    <input type="text" id="searchBox" placeholder="영상 검색...">
+    <hr class="divider">
+
+    <div id="search-text">※검색 기능※.</div>
+    <input type="text" id="searchBox" placeholder="🔍 영상을 검색해 주세요">
 
     <div class="results" id="results"></div>
 
@@ -193,6 +208,7 @@ const excelData = [
   // 텍스트 설명 요소
   const step2Text = document.getElementById("step2-text");
   const step3Text = document.getElementById("step3-text");
+  const step2InfoText = document.getElementById("step2-info-text"); // 새로 추가
 
   // 1단계 회사 목록
   [...new Set(excelData.map(i => i.step1))].forEach(val => {
@@ -205,14 +221,15 @@ const excelData = [
   // 회사 선택 → 기능 목록
   level1.addEventListener("change", function() {
     const company = this.value;
-    level2.innerHTML = '<option value="" selected disabled>⚙️ 2단계: 기능 선택</option>';
-    level3.innerHTML = '<option value="" selected disabled>🎬 3단계: 영상 선택</option>';
+    level2.innerHTML = '<option value="" selected disabled>⚙️ 기능을 선택해 주세요</option>';
+    level3.innerHTML = '<option value="" selected disabled>🎬 영상을 선택해 주세요</option>';
 
     // 2단계와 3단계 메뉴 및 텍스트 숨김
     level2.classList.add("hidden");
     level3.classList.add("hidden");
     step2Text.classList.add("hidden");
     step3Text.classList.add("hidden");
+    step2InfoText.classList.add("hidden");
 
     const step2Values = [...new Set(excelData.filter(i => i.step1 === company).map(i => i.step2))];
     step2Values.forEach(val => {
@@ -225,13 +242,14 @@ const excelData = [
     // 2단계 메뉴와 텍스트 보이게 함
     level2.classList.remove("hidden");
     step2Text.classList.remove("hidden");
+    step2InfoText.classList.remove("hidden");
   });
 
   // 기능 선택 → 영상 목록
   level2.addEventListener("change", function() {
     const company = level1.value;
     const func = this.value;
-    level3.innerHTML = '<option value="" selected disabled>🎬 3단계: 영상 선택</option>';
+    level3.innerHTML = '<option value="" selected disabled>🎬 영상을 선택해 주세요</option>';
     
     // 3단계 메뉴와 텍스트 숨김
     level3.classList.add("hidden");
@@ -297,5 +315,3 @@ const excelData = [
 </script>
 </body>
 </html>
-
-
