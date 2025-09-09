@@ -18,11 +18,11 @@
     min-height: 100vh;
     margin: 0;
     padding: 20px;
-    background: #2c2c2c;   /* 공통 배경 */
-    color: #f0f0f0;        /* 공통 텍스트 */
+    background: #2c2c2c; /* 공통 배경 */
+    color: #f0f0f0; /* 공통 텍스트 */
   }
   .container {
-    background: #3a3a3a;   /* 컨테이너 공통색 */
+    background: #3a3a3a; /* 컨테이너 공통색 */
     padding: 30px;
     border-radius: 16px;
     box-shadow: 0 8px 30px rgba(0,0,0,0.4);
@@ -44,7 +44,7 @@
     margin-bottom: 5px;
     text-align: left;
     color: #bbb;
-    padding-left: 5px;
+    padding-left: 10px; /* 텍스트를 오른쪽으로 이동 */
   }
   select, input {
     width: 90%;
@@ -59,6 +59,16 @@
     color: #f0f0f0;
   }
   #searchBox { width: 85%; }
+  
+  /* 검색창 텍스트 설명 */
+  #search-text {
+    text-align: left;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    color: #bbb;
+    font-size: 15px;
+    padding-left: 10px; /* 오른쪽으로 이동 */
+  }
 
   /* 드롭다운 숨김 */
   .hidden {
@@ -130,6 +140,7 @@
       <option value="" selected disabled>🎬 3단계: 영상 선택</option>
     </select>
 
+    <div id="search-text">필요하신 기능 한번에 검색할수 있습니다.<br>검색뒤 이용하시는 회사 차량에 맞춰서 설명서 눌러주시면 설명동영상이 새창으로 열립니다.</div>
     <input type="text" id="searchBox" placeholder="영상 검색...">
 
     <div class="results" id="results"></div>
@@ -169,11 +180,7 @@ const excelData = [
   { step1: "현대자동차", step2: "부가기능", step3: "조명", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=123&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24=" },
   { step1: "현대자동차", step2: "부가기능", step3: "2열 실내 테이블", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=112" },
   { step1: "현대자동차", step2: "부가기능", step3: "냉장고", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=113" },
-  { step1: "현대자동차", step2: "부가기능", step3: "싱크대", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=117" },
-  { step1: "현대자동차", step2: "부가기능", step3: "오수 배출", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=121" },
-  { step1: "현대자동차", step2: "부가기능", step3: "외부샤워기", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=124" },
-  { step1: "현대자동차", step2: "부가기능", step3: "조명", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=123" },
-  { step1: "현대자동차", step2: "부가기능", step3: "청수 보충", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=120" }
+  { step1: "현대자동차", step2: "부가기능", step3: "싱크대", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=117" }
 ];
   const level1 = document.getElementById("level1-select");
   const level2 = document.getElementById("level2-select");
