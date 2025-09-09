@@ -39,7 +39,7 @@
   h2 { 
     margin-bottom: 20px; 
     color: #f0f0f0; 
-    font-size: 1.8em; /* 폰트 크기 2배로 설정 */
+    font-size: 1.8em; /* 폰트 크기 수정 */
   }
 
   /* 드롭다운 & 검색창 */
@@ -48,7 +48,7 @@
     margin-bottom: 5px;
     text-align: left;
     color: #bbb;
-    padding-left: 5%; /* 텍스트를 드롭다운과 같은 위치로 정렬 */
+    padding-left: 5%;
   }
   select, input {
     width: 90%;
@@ -71,7 +71,7 @@
     margin-bottom: 5px;
     color: #bbb;
     font-size: 15px;
-    padding-left: 5%; /* 검색창과 같은 위치로 정렬 */
+    padding-left: 5%;
   }
 
   /* 드롭다운 숨김 */
@@ -85,7 +85,7 @@
     height: 1px;
     background: #555;
     margin: 25px auto;
-    width: 92%;
+    width: 90%;
   }
 
   /* 검색 결과 */
@@ -119,7 +119,9 @@
 
   /* 카카오톡 문의 버튼 */
   .contact-btn {
-    display: block;
+    display: flex; /* 이미지를 텍스트와 나란히 배치 */
+    justify-content: center; /* 버튼 내용 가운데 정렬 */
+    align-items: center; /* 이미지와 텍스트를 수직 중앙에 맞춤 */
     margin-top: 20px;
     padding: 12px;
     background: #ffeb00;
@@ -127,6 +129,12 @@
     font-weight: bold;
     color: #000;
     text-decoration: none;
+  }
+  /* 새로운 이미지 아이콘 스타일 */
+  .contact-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
   }
 
   /* 검색 하이라이트 */
@@ -138,33 +146,34 @@
     <img src="https://i.imgur.com/10We0IH.png" alt="캠버 로고" class="logo">
     <h2>캠핑카 사용 안내 동영상</h2>
 
-    <div class="text-description">1. 회사 선택</div>
+    <div class="text-description">🏢 1. 회사 선택</div>
     <select id="level1-select">
       <option value="" selected disabled>🏢 회사를 선택해주세요</option>
     </select>
 
-    <div id="step2-text" class="text-description hidden">2. 기능 선택</div>
+    <div id="step2-text" class="text-description hidden">⚙️ 2. 기능 선택</div>
     <select id="level2-select" class="hidden">
       <option value="" selected disabled>⚙️ 기능을 선택해 주세요</option>
     </select>
-    <div id="step2-info-text" class="text-description hidden">주요기능 : 무시동 에어컨, 히터, 어닝, 평탄화, 팝업텐트<br>부가기능 : 외부전원충전기, 외부샤워기, 청수 오수, 조명, 냉장고, 싱크대, TV<br><br></div>
+    <div id="step2-info-text" class="text-description hidden">주요기능 : 무시동 에어컨, 히터, 어닝, 평탄화, 팝업텐트<br>부가기능 : 그외 기능들</div>
 
-    <div id="step3-text" class="text-description hidden">3. 영상 선택</div>
+    <div id="step3-text" class="text-description hidden">🎬 3. 영상 선택</div>
     <select id="level3-select" class="hidden">
       <option value="" selected disabled>🎬 영상을 선택해 주세요</option>
     </select>
 
     <hr class="divider">
 
-    <div id="search-text">※검색 기능※</div>
-    <input type="text" id="searchBox" placeholder="🔍 영상을 검색해 주세요">
+    <div id="search-text">※검색 기능※.</div>
+    <input type="text" id="searchBox" placeholder="🔍 영상을 검색해 주세요/">
 
     <div class="results" id="results"></div>
 
     <div class="preview-card" id="preview" style="display:none;"></div>
 
     <a href="http://pf.kakao.com/_njISxb/chat" target="_blank" class="contact-btn">
-      👉 카카오톡 문의하기
+      <img src="https://i.imgur.com/u4T0qDa.png" alt="카카오톡 문의 아이콘" class="contact-icon">
+      카카오톡 문의하기
     </a>
   </div>
 
@@ -208,7 +217,7 @@ const excelData = [
   // 텍스트 설명 요소
   const step2Text = document.getElementById("step2-text");
   const step3Text = document.getElementById("step3-text");
-  const step2InfoText = document.getElementById("step2-info-text"); // 새로 추가
+  const step2InfoText = document.getElementById("step2-info-text");
 
   // 1단계 회사 목록
   [...new Set(excelData.map(i => i.step1))].forEach(val => {
@@ -315,8 +324,3 @@ const excelData = [
 </script>
 </body>
 </html>
-
-
-
-
-
