@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>캠버 영상 설명서</title>
 
-<!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@500&display=swap" rel="stylesheet">
@@ -19,11 +18,11 @@
     min-height: 100vh;
     margin: 0;
     padding: 20px;
-    background: #2c2c2c;   /* 공통 배경 */
-    color: #f0f0f0;        /* 공통 텍스트 */
+    background: #2c2c2c;   /* 공통 배경 */
+    color: #f0f0f0;        /* 공통 텍스트 */
   }
   .container {
-    background: #3a3a3a;   /* 컨테이너 공통색 */
+    background: #3a3a3a;   /* 컨테이너 공통색 */
     padding: 30px;
     border-radius: 16px;
     box-shadow: 0 8px 30px rgba(0,0,0,0.4);
@@ -40,6 +39,13 @@
   h2 { margin-bottom: 20px; color: #f0f0f0; }
 
   /* 드롭다운 & 검색창 */
+  .text-description {
+    font-size: 15px;
+    margin-bottom: 5px;
+    text-align: left;
+    color: #bbb;
+    padding-left: 5px;
+  }
   select, input {
     width: 90%;
     padding: 14px;
@@ -56,10 +62,7 @@
 
   /* 드롭다운 숨김 */
   .hidden {
-    visibility: hidden;
-    height: 0;
-    margin: 0;
-    padding: 0;
+    display: none;
   }
 
   /* 검색 결과 */
@@ -112,28 +115,27 @@
     <img src="https://i.imgur.com/1MeXDbG.png" alt="캠버 로고" class="logo">
     <h2>캠버 영상 설명서</h2>
 
+    <div class="text-description">회사를 선택해주세요.</div>
     <select id="level1-select">
       <option value="" selected disabled>🏢 1단계: 회사 선택</option>
     </select>
 
+    <div id="step2-text" class="text-description hidden">주요기능 : 무시동 에어컨, 히터, 어닝, 평탄화, 팝업텐트<br>부가기능 : 그외 기능들</div>
     <select id="level2-select" class="hidden">
       <option value="" selected disabled>⚙️ 2단계: 기능 선택</option>
     </select>
 
+    <div id="step3-text" class="text-description hidden">필요하신 설명서를 선택해 주시면 설명동영상이 새창으로 열립니다.</div>
     <select id="level3-select" class="hidden">
       <option value="" selected disabled>🎬 3단계: 영상 선택</option>
     </select>
 
-    <!-- 검색창 -->
     <input type="text" id="searchBox" placeholder="영상 검색...">
 
-    <!-- 검색 결과 -->
     <div class="results" id="results"></div>
 
-    <!-- 미리보기 -->
     <div class="preview-card" id="preview" style="display:none;"></div>
 
-    <!-- 카카오톡 문의 버튼 -->
     <a href="http://pf.kakao.com/_njISxb/chat" target="_blank" class="contact-btn">
       👉 카카오톡 문의하기
     </a>
@@ -141,32 +143,30 @@
 
 <script>
 const excelData = [
-  { step1: "현대 엔지니어링", step2: "주요기능", step3: "TV 사용법", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=137&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24mYl9jYXRlZ29yeT3tmITrjIDsl5Tsp4Dri4jslrTrp4E=" },
   { step1: "현대 엔지니어링", step2: "주요기능", step3: "무시동 에어컨 사용법", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=139&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24mYl9jYXRlZ29yeT3tmITrjIDsl5Tsp4Dri4jslrTrp4E=" },
   { step1: "현대 엔지니어링", step2: "주요기능", step3: "무시동 히터 사용법", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=138&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24mYl9jYXRlZ29yeT3tmITrjIDsl5Tsp4Dri4jslrTrp4E=" },
   { step1: "현대 엔지니어링", step2: "주요기능", step3: "실내 좌석 평탄화", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=133&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24mYl9jYXRlZ29yeT3tmITrjIDsl5Tsp4Dri4jslrTrp4E=" },
-  { step1: "현대 엔지니어링", step2: "주요기능", step3: "싱크대 사용법", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=136&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24mYl9jYXRlZ29yeT3tmITrjIDsl5Tsp4Dri4jslrTrp4E=" },
   { step1: "현대 엔지니어링", step2: "주요기능", step3: "어닝텐트 사용법", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=134&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24mYl9jYXRlZ29yeT3tmITrjIDsl5Tsp4Dri4jslrTrp4E=" },
   { step1: "현대 엔지니어링", step2: "부가기능", step3: "전자제품 사용법", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=135&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24mYl9jYXRlZ29yeT3tmITrjIDsl5Tsp4Dri4jslrTrp4E=" },
   { step1: "현대 엔지니어링", step2: "부가기능", step3: "전체 사용법 영상", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=130&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24mYl9jYXRlZ29yeT3tmITrjIDsl5Tsp4Dri4jslrTrp4E=" },
   { step1: "현대 엔지니어링", step2: "부가기능", step3: "팝업텐트 닫기", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=132&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24mYl9jYXRlZ29yeT3tmITrjIDsl5Tsp4Dri4jslrTrp4E=" },
   { step1: "현대 엔지니어링", step2: "부가기능", step3: "팝업텐트 열기", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=131&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24mYl9jYXRlZ29yeT3tmITrjIDsl5Tsp4Dri4jslrTrp4E=" },
-
+  { step1: "현대 엔지니어링", step2: "부가기능", step3: "TV 사용법", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=137&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24mYl9jYXRlZ29yeT3tmITrjIDsl5Tsp4Dri4jslrTrp4E=" },
+  { step1: "현대 엔지니어링", step2: "부가기능", step3: "싱크대 사용법", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=136&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24mYl9jYXRlZ29yeT3tmITrjIDsl5Tsp4Dri4jslrTrp4E=" },
   { step1: "현대자동차", step2: "주요기능", step3: "무시동 에어컨", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=114&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24=" },
   { step1: "현대자동차", step2: "주요기능", step3: "무시동 히터", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=115&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24=" },
   { step1: "현대자동차", step2: "주요기능", step3: "어닝텐트 설치", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=118&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24=" },
   { step1: "현대자동차", step2: "주요기능", step3: "어닝텐트 철수", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=119&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24=" },
-  { step1: "현대자동차", step2: "주요기능", step3: "청수 보충", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=120&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24=" },
-  { step1: "현대자동차", step2: "주요기능", step3: "오수 배출", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=121&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24=" },
-  { step1: "현대자동차", step2: "주요기능", step3: "외부 전원 충전기 충전", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=122&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24=" },
-  { step1: "현대자동차", step2: "주요기능", step3: "외부샤워기", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=124&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24=" },
-  { step1: "현대자동차", step2: "주요기능", step3: "조명", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=123&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24=" },
   { step1: "현대자동차", step2: "주요기능", step3: "좌석 평탄화", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=125&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24=" },
-  { step1: "현대자동차", step2: "주요기능", step3: "트렁크 테이블", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=126&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24=" },
   { step1: "현대자동차", step2: "주요기능", step3: "팝업 컨트롤러", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=127&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24=" },
   { step1: "현대자동차", step2: "주요기능", step3: "팝업텐트 설치", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=128&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24=" },
   { step1: "현대자동차", step2: "주요기능", step3: "팝업텐트 철수", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=129&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24=" },
-
+  { step1: "현대자동차", step2: "주요기능", step3: "트렁크 테이블", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=126&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24=" },
+  { step1: "현대자동차", step2: "부가기능", step3: "외부 전원 충전기 충전", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=122&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24=" },
+  { step1: "현대자동차", step2: "부가기능", step3: "외부샤워기", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=124&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24=" },
+  { step1: "현대자동차", step2: "부가기능", step3: "청수 보충", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=120&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24=" },
+  { step1: "현대자동차", step2: "부가기능", step3: "오수 배출", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=121&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24=" },
+  { step1: "현대자동차", step2: "부가기능", step3: "조명", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=123&_PVSC=JnBuPWJvYXJkLmxpc3QmX21lbnU9Y2FtcGluZ2Nhcl9ub3Rpb24=" },
   { step1: "현대자동차", step2: "부가기능", step3: "2열 실내 테이블", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=112" },
   { step1: "현대자동차", step2: "부가기능", step3: "냉장고", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=113" },
   { step1: "현대자동차", step2: "부가기능", step3: "싱크대", url: "https://www.vanpick.co.kr/?pn=board.view&_menu=campingcar_notion&_uid=117" },
@@ -182,6 +182,10 @@ const excelData = [
   const resultsDiv = document.getElementById("results");
   const preview = document.getElementById("preview");
 
+  // 텍스트 설명 요소
+  const step2Text = document.getElementById("step2-text");
+  const step3Text = document.getElementById("step3-text");
+
   // 1단계 회사 목록
   [...new Set(excelData.map(i => i.step1))].forEach(val => {
     const opt = document.createElement("option");
@@ -196,6 +200,12 @@ const excelData = [
     level2.innerHTML = '<option value="" selected disabled>⚙️ 2단계: 기능 선택</option>';
     level3.innerHTML = '<option value="" selected disabled>🎬 3단계: 영상 선택</option>';
 
+    // 2단계와 3단계 메뉴 및 텍스트 숨김
+    level2.classList.add("hidden");
+    level3.classList.add("hidden");
+    step2Text.classList.add("hidden");
+    step3Text.classList.add("hidden");
+
     const step2Values = [...new Set(excelData.filter(i => i.step1 === company).map(i => i.step2))];
     step2Values.forEach(val => {
       const opt = document.createElement("option");
@@ -203,8 +213,10 @@ const excelData = [
       opt.textContent = val;
       level2.appendChild(opt);
     });
-
+    
+    // 2단계 메뉴와 텍스트 보이게 함
     level2.classList.remove("hidden");
+    step2Text.classList.remove("hidden");
   });
 
   // 기능 선택 → 영상 목록
@@ -212,6 +224,10 @@ const excelData = [
     const company = level1.value;
     const func = this.value;
     level3.innerHTML = '<option value="" selected disabled>🎬 3단계: 영상 선택</option>';
+    
+    // 3단계 메뉴와 텍스트 숨김
+    level3.classList.add("hidden");
+    step3Text.classList.add("hidden");
 
     const step3Items = excelData.filter(i => i.step1 === company && i.step2 === func);
     step3Items.forEach(item => {
@@ -220,8 +236,10 @@ const excelData = [
       opt.textContent = item.step3;
       level3.appendChild(opt);
     });
-
+    
+    // 3단계 메뉴와 텍스트 보이게 함
     level3.classList.remove("hidden");
+    step3Text.classList.remove("hidden");
   });
 
   // 영상 선택
@@ -271,6 +289,3 @@ const excelData = [
 </script>
 </body>
 </html>
-
-
-
