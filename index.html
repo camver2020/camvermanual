@@ -73,10 +73,23 @@
     font-size: 15px;
     padding-left: 5%;
   }
+  #search-info-text {
+    text-align: left;
+    margin-top: -10px;
+    margin-bottom: 15px;
+    color: #bbb;
+    font-size: 13px;
+    padding-left: 5%;
+  }
 
   /* 드롭다운 숨김 */
   .hidden {
     display: none;
+  }
+  
+  /* 2단계 하단 텍스트 마진 추가 */
+  #step2-info-text {
+    margin-bottom: 20px;
   }
 
   /* 구분선 */
@@ -166,6 +179,7 @@
 
     <div id="search-text">※검색 기능※</div>
     <input type="text" id="searchBox" placeholder="🔍 영상을 검색해 주세요">
+    <div id="search-info-text">필요하신 기능 한번에 검색할수 있습니다.<br>검색뒤 이용하시는 회사 차량에 맞춰서 설명서 눌러주시면 설명동영상이 새창으로 열립니다.</div>
 
     <div class="results" id="results"></div>
 
@@ -324,5 +338,3 @@ const excelData = [
 </script>
 </body>
 </html>
-
-
